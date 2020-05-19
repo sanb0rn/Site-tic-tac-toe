@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+    <script async src="comments.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Отзывы</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="animate.js"></script>
+</head>
+<body  vlink="#0000FF">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="index.html">Крестики-нолики</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">История </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Game.html">Игра</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="Reviews.html">Отзывы<span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+<h2>Отзывы</h2>
+
+<div class="reviews col-lg-6" id='reviews'>
+    <p style="text-align: left; font-size: 18px;text-indent:0">Оставить отзыв:</p>
+    <p style="text-align: left; font-size: 14px; text-indent:0">Ваше имя:</p>
+    <input class="form-control" id='Name' size="30" style="float:left;" type="text"><br><br>
+    <p style="text-align: left;font-size: 14px; text-indent:0;">Оценка:</p>
+    <select class="custom-select" id='Rating' style="float: left; width: 10%">
+        <option>5</option>
+        <option>4</option>
+        <option>3</option>
+        <option>2</option>
+        <option>1</option>
+    </select><br><br>
+    <p style="text-align: left;font-size: 14px; text-indent:0;">Ваш комментарий:</p>
+    <textarea class="form-control addReview" id='Review'></textarea>
+
+    <p><input OnClick="addNewComment();" name="add" style="margin-left: -35px; margin-bottom: 30px" type="submit" class="btn btn-success"></p>
+    <progress id="elem"></progress>
+
+</div>
+<script>
+  function loading() {
+    animate({
+      duration: 1000,
+      timing: function(timeFraction) {
+        return timeFraction;
+      },
+      draw: function(progress) {
+        elem.style.display ='none';
+      }
+    });
+  };
+
+  function post(){
+    $.getJSON("posts.json",function (json) {
+        for (let i=0;i<json.posts.length;i++){
+            let jsonComment=new Comment(json.posts[i].name,json.posts[i].mark,json.posts[i].text);
+            jsonComment.Add();
+        }
+    })
+  }
+
+  setTimeout(loading, 2000);
+  setTimeout(post, 2000);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
